@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/actions/actions.iml" filepath="$PROJECT_DIR$/.idea/modules/actions/actions.iml" group="actions" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/actions/actions_main.iml" filepath="$PROJECT_DIR$/.idea/modules/actions/actions_main.iml" group="actions" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/actions/actions_test.iml" filepath="$PROJECT_DIR$/.idea/modules/actions/actions_test.iml" group="actions" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eventsdiscovery/eventsdiscovery.iml" filepath="$PROJECT_DIR$/.idea/modules/eventsdiscovery/eventsdiscovery.iml" group="eventsdiscovery" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eventsdiscovery/eventsdiscovery_main.iml" filepath="$PROJECT_DIR$/.idea/modules/eventsdiscovery/eventsdiscovery_main.iml" group="eventsdiscovery" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/eventsdiscovery/eventsdiscovery_test.iml" filepath="$PROJECT_DIR$/.idea/modules/eventsdiscovery/eventsdiscovery_test.iml" group="eventsdiscovery" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/insights/insights.iml" filepath="$PROJECT_DIR$/.idea/modules/insights/insights.iml" group="insights" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/insights/insights_main.iml" filepath="$PROJECT_DIR$/.idea/modules/insights/insights_main.iml" group="insights" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/insights/insights_test.iml" filepath="$PROJECT_DIR$/.idea/modules/insights/insights_test.iml" group="insights" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-api-client.iml" filepath="$PROJECT_DIR$/.idea/modules/java-api-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-api-client_main.iml" filepath="$PROJECT_DIR$/.idea/modules/java-api-client_main.iml" group="java-api-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/java-api-client_test.iml" filepath="$PROJECT_DIR$/.idea/modules/java-api-client_test.iml" group="java-api-client" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/schedjoules-api/schedjoules-api.iml" filepath="$PROJECT_DIR$/.idea/modules/schedjoules-api/schedjoules-api.iml" group="schedjoules-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/schedjoules-api/schedjoules-api_main.iml" filepath="$PROJECT_DIR$/.idea/modules/schedjoules-api/schedjoules-api_main.iml" group="schedjoules-api" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/schedjoules-api/schedjoules-api_test.iml" filepath="$PROJECT_DIR$/.idea/modules/schedjoules-api/schedjoules-api_test.iml" group="schedjoules-api" />
+    </modules>
+  </component>
+</project>

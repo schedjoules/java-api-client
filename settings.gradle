@@ -1,0 +1,6 @@
+rootProject.name = 'java-api-client'
+include 'schedjoules-api'
+include 'eventsdiscovery'
+include 'actions'
+include 'insights'
+
