@@ -122,7 +122,7 @@ public final class InsightsRequest implements ApiQuery<Boolean>
         JSONObject result = new JSONObject();
         result.put("id", mSession.id().toString());
         result.put("start", formattedTime(mSession.start()));
-        result.put("user", mSession.user().toString());
+        result.put("user-id", mSession.user().toString());
         if (mSession.end() != null)
         {
             result.put("end", formattedTime(mSession.end()));
@@ -149,6 +149,20 @@ public final class InsightsRequest implements ApiQuery<Boolean>
         result.put("version", mPlatform.version().toString());
         result.put("vendor", mPlatform.vendor().toString());
         result.put("device", mPlatform.device().toString());
+        if (mPlatform.display() != null)
+        {
+            result.put("display", displayObject());
+        }
+        return result;
+    }
+
+
+    private JSONObject displayObject()
+    {
+        JSONObject result = new JSONObject();
+        result.put("width", mPlatform.display().width());
+        result.put("height", mPlatform.display().height());
+        result.put("dpi", mPlatform.display().dpi());
         return result;
     }
 
