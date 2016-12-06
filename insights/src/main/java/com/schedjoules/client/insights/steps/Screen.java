@@ -67,7 +67,7 @@ public final class Screen extends AbstractStep implements Step
     @Override
     public Event event()
     {
-        return null;
+        return mEvent;
     }
 
 }
