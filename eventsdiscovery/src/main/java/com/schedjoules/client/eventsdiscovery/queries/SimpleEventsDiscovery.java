@@ -44,6 +44,7 @@ import java.util.Map;
 public final class SimpleEventsDiscovery implements EventsDiscovery
 {
     private final static String QUERY_PATH = "/events";
+    private final static String API_VERSION = "1";
 
     // TODO: get rid of this map and use something immutable
     private final Map<String, String> mParams;
@@ -131,7 +132,7 @@ public final class SimpleEventsDiscovery implements EventsDiscovery
         {
             Map<String, String> map = new HashMap<>(mParams);
             return api.queryResult(new URI(null, null, QUERY_PATH, new MapQueryString(map).toString(), null),
-                    new GetRequest<>(new ApiVersionHeaders("1"), new MultiEventsResponseHandler()));
+                    new GetRequest<>(new ApiVersionHeaders(API_VERSION), new MultiEventsResponseHandler()));
         }
         catch (URISyntaxException e)
         {

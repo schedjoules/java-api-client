@@ -48,6 +48,7 @@ import java.net.URISyntaxException;
 public final class InsightsRequest implements ApiQuery<Boolean>
 {
     private final static URI QUERY_PATH = URI.create("/insights");
+    private final static String API_VERSION = "1";
 
     private final Session mSession;
     private final Platform mPlatform;
@@ -97,7 +98,7 @@ public final class InsightsRequest implements ApiQuery<Boolean>
             @Override
             public Headers headers()
             {
-                return new ApiVersionHeaders("1");
+                return new ApiVersionHeaders(API_VERSION);
             }
 
 

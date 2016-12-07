@@ -17,20 +17,18 @@
 
 package com.schedjoules.client.utils;
 
-import org.dmfs.httpessentials.headers.FilteredHeaders;
 import org.dmfs.httpessentials.headers.Header;
 import org.dmfs.httpessentials.headers.HeaderType;
 import org.dmfs.httpessentials.headers.Headers;
 import org.dmfs.httpessentials.headers.ListHeaderType;
 import org.dmfs.httpessentials.headers.SingletonHeaderType;
-import org.dmfs.httpessentials.headers.UpdatedHeaders;
+import org.dmfs.httpessentials.headers.SingletonHeaders;
 import org.dmfs.httpessentials.types.StringToken;
 import org.dmfs.httpessentials.types.Token;
 import org.dmfs.iterators.SingletonIterator;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 /**
@@ -40,7 +38,7 @@ import java.util.NoSuchElementException;
  */
 public final class ApiVersionHeaders implements Headers
 {
-    private final Token mApiVersion;
+    private final Headers mDelegate;
 
 
     public ApiVersionHeaders(String apiVersion)
@@ -51,46 +49,42 @@ public final class ApiVersionHeaders implements Headers
 
     public ApiVersionHeaders(Token apiVersion)
     {
-        mApiVersion = apiVersion;
+        mDelegate = new SingletonHeaders(HeaderTypes.API_VERSION.entity(apiVersion));
     }
 
 
     @Override
     public boolean contains(HeaderType<?> headerType)
     {
-        return HeaderTypes.API_VERSION.equals(headerType);
+        return mDelegate.contains(headerType);
     }
 
 
     @Override
     public <T> Header<T> header(SingletonHeaderType<T> headerType)
     {
-        if (!contains(headerType))
-        {
-            throw new NoSuchElementException(String.format("No %s header found", headerType.name()));
-        }
-        return (Header<T>) HeaderTypes.API_VERSION.entity(mApiVersion);
+        return mDelegate.header(headerType);
     }
 
 
     @Override
     public <T> Header<List<T>> header(ListHeaderType<T> headerType)
     {
-        throw new NoSuchElementException(String.format("No %s header found", headerType.name()));
+        return mDelegate.header(headerType);
     }
 
 
     @Override
     public <T> Headers withHeader(Header<T> header)
     {
-        return new UpdatedHeaders(this, header);
+        return mDelegate.withHeader(header);
     }
 
 
     @Override
     public <T> Headers withoutHeaderType(HeaderType<T> headerType)
     {
-        return new FilteredHeaders(this, headerType);
+        return mDelegate.withoutHeaderType(headerType);
     }
 
 

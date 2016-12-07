@@ -40,6 +40,7 @@ import java.util.Iterator;
 public final class ActionsQuery implements ApiQuery<Iterator<Link>>
 {
     private final static String PATH_TEMPLATE = "/events/%s/actions";
+    private final static String API_VERSION = "1";
 
     private final String mEventId;
 
@@ -59,7 +60,7 @@ public final class ActionsQuery implements ApiQuery<Iterator<Link>>
     public Iterator<Link> queryResult(Api api) throws IOException, URISyntaxException, ProtocolError, ProtocolException
     {
         return api.queryResult(new URI(null, null, String.format(PATH_TEMPLATE, mEventId), null, null),
-                new GetRequest<>(new ApiVersionHeaders("1"), new LinksArrayResponseHandler()));
+                new GetRequest<>(new ApiVersionHeaders(API_VERSION), new LinksArrayResponseHandler()));
     }
 
 }
