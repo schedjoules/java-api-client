@@ -23,6 +23,7 @@ import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.eventsdiscovery.http.SingleEventResponseHandler;
+import com.schedjoules.client.utils.ApiVersionHeaders;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.httpessentials.types.Token;
@@ -39,6 +40,7 @@ import java.net.URI;
 public final class EventByUid implements ApiQuery<Envelope<Event>>
 {
     private final static String QUERY_PATH = "/events/";
+    private final static String API_VERSION = "1";
 
     private final Token mUid;
 
@@ -52,6 +54,7 @@ public final class EventByUid implements ApiQuery<Envelope<Event>>
     @Override
     public Envelope<Event> queryResult(Api api) throws IOException, ProtocolError, ProtocolException
     {
-        return api.queryResult(URI.create(QUERY_PATH).resolve(mUid.toString()), new GetRequest<>(new SingleEventResponseHandler()));
+        return api.queryResult(URI.create(QUERY_PATH).resolve(mUid.toString()),
+                new GetRequest<>(new ApiVersionHeaders(API_VERSION), new SingleEventResponseHandler()));
     }
 }
