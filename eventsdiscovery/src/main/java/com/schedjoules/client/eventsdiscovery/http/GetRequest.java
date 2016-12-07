@@ -40,11 +40,19 @@ import java.io.IOException;
  */
 public final class GetRequest<T> implements HttpRequest<T>
 {
+    private final Headers mHeaders;
     private final HttpResponseHandler<T> mResponseHandler;
 
 
     public GetRequest(HttpResponseHandler<T> responseHandler)
     {
+        this(EmptyHeaders.INSTANCE, responseHandler);
+    }
+
+
+    public GetRequest(Headers headers, HttpResponseHandler<T> responseHandler)
+    {
+        mHeaders = headers;
         mResponseHandler = responseHandler;
     }
 
@@ -59,7 +67,7 @@ public final class GetRequest<T> implements HttpRequest<T>
     @Override
     public Headers headers()
     {
-        return EmptyHeaders.INSTANCE;
+        return mHeaders;
     }
 
 
