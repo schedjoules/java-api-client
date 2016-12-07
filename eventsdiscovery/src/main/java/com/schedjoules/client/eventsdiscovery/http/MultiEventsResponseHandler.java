@@ -25,6 +25,7 @@ import com.schedjoules.client.eventsdiscovery.ResultPage;
 import com.schedjoules.client.eventsdiscovery.json.JsonArrayIterator;
 import com.schedjoules.client.eventsdiscovery.json.JsonEnvelope;
 import com.schedjoules.client.eventsdiscovery.json.JsonEventFactory;
+import com.schedjoules.client.utils.ApiVersionHeaders;
 import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
@@ -134,7 +135,7 @@ public final class MultiEventsResponseHandler implements HttpResponseHandler<Res
                 Iterator<Link> links = linkWithRel(rel);
                 if (!links.hasNext())
                 {
-                    throw new IllegalStateException(String.format("Response didn't contain %s a page.", rel));
+                    throw new IllegalStateException(String.format("Response didn't contain %s page.", rel));
                 }
 
                 final Link link = links.next();
@@ -145,7 +146,7 @@ public final class MultiEventsResponseHandler implements HttpResponseHandler<Res
                     public ResultPage<Envelope<Event>> queryResult(Api api) throws IOException, URISyntaxException, ProtocolError, ProtocolException
                     {
                         return api.queryResult(new URI(null, null, link.target().getPath(), link.target().getQuery(), null),
-                                new GetRequest<>(new MultiEventsResponseHandler()));
+                                new GetRequest<>(new ApiVersionHeaders("1"), new MultiEventsResponseHandler()));
                     }
                 };
             }

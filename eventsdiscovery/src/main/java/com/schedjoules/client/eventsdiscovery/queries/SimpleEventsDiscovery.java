@@ -26,6 +26,7 @@ import com.schedjoules.client.eventsdiscovery.MapQueryString;
 import com.schedjoules.client.eventsdiscovery.ResultPage;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.eventsdiscovery.http.MultiEventsResponseHandler;
+import com.schedjoules.client.utils.ApiVersionHeaders;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.rfc5545.DateTime;
@@ -130,7 +131,7 @@ public final class SimpleEventsDiscovery implements EventsDiscovery
         {
             Map<String, String> map = new HashMap<>(mParams);
             return api.queryResult(new URI(null, null, QUERY_PATH, new MapQueryString(map).toString(), null),
-                    new GetRequest<>(new MultiEventsResponseHandler()));
+                    new GetRequest<>(new ApiVersionHeaders("1"), new MultiEventsResponseHandler()));
         }
         catch (URISyntaxException e)
         {

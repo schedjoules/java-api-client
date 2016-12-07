@@ -20,6 +20,7 @@ package com.schedjoules.client.insights;
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
 import com.schedjoules.client.insights.utils.JsonRequestEntity;
+import com.schedjoules.client.utils.ApiVersionHeaders;
 import org.dmfs.httpessentials.HttpMethod;
 import org.dmfs.httpessentials.HttpStatus;
 import org.dmfs.httpessentials.client.HttpRequest;
@@ -28,7 +29,6 @@ import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
-import org.dmfs.httpessentials.headers.EmptyHeaders;
 import org.dmfs.httpessentials.headers.Headers;
 import org.dmfs.httpessentials.responsehandlers.TrivialResponseHandler;
 import org.dmfs.rfc5545.DateTime;
@@ -97,7 +97,7 @@ public final class InsightsRequest implements ApiQuery<Boolean>
             @Override
             public Headers headers()
             {
-                return EmptyHeaders.INSTANCE;
+                return new ApiVersionHeaders("1");
             }
 
 
