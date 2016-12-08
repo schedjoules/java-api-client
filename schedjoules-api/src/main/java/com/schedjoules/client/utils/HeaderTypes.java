@@ -17,6 +17,7 @@
 
 package com.schedjoules.client.utils;
 
+import org.dmfs.httpessentials.converters.PlainStringHeaderConverter;
 import org.dmfs.httpessentials.headers.BasicSingletonHeaderType;
 import org.dmfs.httpessentials.headers.HeaderType;
 import org.dmfs.httpessentials.headers.SingletonHeaderType;
@@ -32,6 +33,7 @@ public final class HeaderTypes
 {
 
     public final static SingletonHeaderType<Token> API_VERSION = new BasicSingletonHeaderType<>("api-version", TokenConverter.INSTANCE);
+    public final static SingletonHeaderType<String> ETAG = new BasicSingletonHeaderType<>("etag", PlainStringHeaderConverter.INSTANCE);
 
 
     private HeaderTypes()

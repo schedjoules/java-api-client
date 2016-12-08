@@ -45,7 +45,7 @@ public final class EventByUid implements ApiQuery<Envelope<Event>>
     private final Token mUid;
 
 
-    private EventByUid(Token uid)
+    public EventByUid(Token uid)
     {
         mUid = uid;
     }
