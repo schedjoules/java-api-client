@@ -20,13 +20,11 @@ package com.schedjoules.client.eventsdiscovery.http;
 import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.json.JsonEvent;
+import com.schedjoules.client.utils.HeaderTypes;
 import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
-import org.dmfs.httpessentials.converters.PlainStringHeaderConverter;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
-import org.dmfs.httpessentials.headers.BasicSingletonHeaderType;
-import org.dmfs.httpessentials.headers.SingletonHeaderType;
 import org.dmfs.httpessentials.responsehandlers.StringResponseHandler;
 import org.json.JSONObject;
 
@@ -40,9 +38,6 @@ import java.io.IOException;
  */
 public final class SingleEventResponseHandler implements HttpResponseHandler<Envelope<Event>>
 {
-    private final static SingletonHeaderType<String> ETAG_HEADER = new BasicSingletonHeaderType<>("etag", PlainStringHeaderConverter.INSTANCE);
-
-
     @Override
     public Envelope<Event> handleResponse(final HttpResponse response) throws IOException, ProtocolError, ProtocolException
     {
@@ -53,7 +48,7 @@ public final class SingleEventResponseHandler implements HttpResponseHandler<Env
             @Override
             public String etag()
             {
-                return response.headers().header(ETAG_HEADER).value();
+                return response.headers().header(HeaderTypes.ETAG).value();
             }
 
 
