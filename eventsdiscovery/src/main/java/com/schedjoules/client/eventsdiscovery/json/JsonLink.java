@@ -124,7 +124,7 @@ public final class JsonLink implements Link
     @Override
     public <T> Iterator<Parameter<T>> parameters(final ParameterType<T> parameterType)
     {
-        final JSONObject properties = mJsonObject.getJSONObject(KEY_PROPERTIES);
+        final JSONObject properties = mJsonObject.optJSONObject(KEY_PROPERTIES);
         return properties == null ? EmptyIterator.<Parameter<T>>instance() : new ConvertedIterator<>(
                 new FilteredIterator<>(properties.keys(), new AnyOf<>(parameterType.name())),
                 new AbstractConvertedIterator.Converter<Parameter<T>, String>()
@@ -141,7 +141,7 @@ public final class JsonLink implements Link
     @Override
     public <T> boolean hasParameter(ParameterType<T> parameterType)
     {
-        JSONObject properties = mJsonObject.getJSONObject(KEY_PROPERTIES);
+        JSONObject properties = mJsonObject.optJSONObject(KEY_PROPERTIES);
         return properties != null && properties.has(parameterType.name());
     }
 }
