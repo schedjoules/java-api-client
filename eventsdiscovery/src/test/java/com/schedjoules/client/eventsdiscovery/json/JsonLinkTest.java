@@ -140,6 +140,16 @@ public class JsonLinkTest
                 "}")).firstParameter(parameterType, "123").value());
     }
 
+    @Test
+    public void firstParameter3() throws Exception
+    {
+        ParameterType<String> parameterType = new BasicParameterType<>("test", new PlainStringHeaderConverter());
+        assertEquals("123", new JsonLink(new JSONObject("{\n" +
+                "  \"rel\": \"rel-type\",\n" +
+                "  \"title\": \"title\",\n" +
+                "  \"href\": \"http://example.com\"\n" +
+                "}")).firstParameter(parameterType, "123").value());
+    }
 
     @Test
     public void parameters() throws Exception
@@ -176,4 +186,15 @@ public class JsonLinkTest
                 "}")).hasParameter(parameterType));
     }
 
+
+    @Test
+    public void hasParameter3() throws Exception
+    {
+        ParameterType<String> parameterType = new BasicParameterType<>("test", new PlainStringHeaderConverter());
+        assertFalse(new JsonLink(new JSONObject("{\n" +
+                "  \"rel\": \"rel-type\",\n" +
+                "  \"title\": \"title\",\n" +
+                "  \"href\": \"http://example.com\"\n" +
+                "}")).hasParameter(parameterType));
+    }
 }
