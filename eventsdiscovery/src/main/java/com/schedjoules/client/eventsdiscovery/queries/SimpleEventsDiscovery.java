@@ -22,7 +22,7 @@ import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.EventsDiscovery;
 import com.schedjoules.client.eventsdiscovery.GeoLocation;
-import com.schedjoules.client.eventsdiscovery.MapQueryString;
+import com.schedjoules.client.utils.MapQueryString;
 import com.schedjoules.client.eventsdiscovery.ResultPage;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.eventsdiscovery.http.MultiEventsResponseHandler;
