@@ -18,6 +18,7 @@
 package com.schedjoules.client.eventsdiscovery;
 
 import org.dmfs.httpessentials.types.Link;
+import org.dmfs.optional.Optional;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 
@@ -31,7 +32,12 @@ public interface Event
 
     DateTime start();
 
-    Duration duration();
+    /**
+     * The {@link Optional} {@link Duration} of the event. This might be absent if the actual duration is unknown.
+     *
+     * @return An {@link Optional} {@link Duration}.
+     */
+    Optional<Duration> duration();
 
     String title();
 

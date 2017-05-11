@@ -23,6 +23,9 @@ import org.dmfs.httpessentials.types.Link;
 import org.dmfs.iterators.AbstractConvertedIterator;
 import org.dmfs.iterators.ConvertedIterator;
 import org.dmfs.iterators.EmptyIterator;
+import org.dmfs.optional.Absent;
+import org.dmfs.optional.Optional;
+import org.dmfs.optional.Present;
 import org.dmfs.rfc5545.DateTime;
 import org.dmfs.rfc5545.Duration;
 import org.json.JSONArray;
@@ -36,6 +39,7 @@ import java.util.Iterator;
  */
 public final class JsonEvent implements Event
 {
+    public static final String KEY_DURATION = "duration";
     private final JSONObject mJsonObject;
 
 
@@ -64,10 +68,9 @@ public final class JsonEvent implements Event
 
 
     @Override
-    public Duration duration()
+    public Optional<Duration> duration()
     {
-        String durationString = mJsonObject.optString("duration", "P0D");
-        return Duration.parse(durationString);
+        return mJsonObject.isNull(KEY_DURATION) ? Absent.<Duration>absent() : new Present<>(Duration.parse(mJsonObject.optString(KEY_DURATION)));
     }
 
 
