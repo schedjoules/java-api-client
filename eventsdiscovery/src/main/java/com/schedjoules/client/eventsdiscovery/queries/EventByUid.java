@@ -19,6 +19,7 @@ package com.schedjoules.client.eventsdiscovery.queries;
 
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
@@ -26,6 +27,7 @@ import com.schedjoules.client.eventsdiscovery.http.SingleEventResponseHandler;
 import com.schedjoules.client.utils.ApiVersionHeaders;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
+import org.dmfs.httpessentials.types.StringToken;
 import org.dmfs.httpessentials.types.Token;
 
 import java.io.IOException;
@@ -56,5 +58,32 @@ public final class EventByUid implements ApiQuery<Envelope<Event>>
     {
         return api.queryResult(URI.create(QUERY_PATH).resolve(mUid.toString()),
                 new GetRequest<>(new ApiVersionHeaders(API_VERSION), new SingleEventResponseHandler()));
+    }
+
+
+    @Override
+    public State<ApiQuery<Envelope<Event>>> serializable()
+    {
+        return new EventByUidState(mUid.toString());
+    }
+
+
+    private final static class EventByUidState implements State<ApiQuery<Envelope<Event>>>
+    {
+
+        private final String mTokenString;
+
+
+        private EventByUidState(String tokenString)
+        {
+            mTokenString = tokenString;
+        }
+
+
+        @Override
+        public ApiQuery<Envelope<Event>> restored()
+        {
+            return new EventByUid(new StringToken(mTokenString));
+        }
     }
 }

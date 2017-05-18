@@ -19,6 +19,7 @@ package com.schedjoules.client.actions.queries;
 
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.actions.http.LinksArrayResponseHandler;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.utils.ApiVersionHeaders;
@@ -63,4 +64,32 @@ public final class ActionsQuery implements ApiQuery<Iterator<Link>>
                 new GetRequest<>(new ApiVersionHeaders(API_VERSION), new LinksArrayResponseHandler()));
     }
 
+
+    @Override
+    public State<ApiQuery<Iterator<Link>>> serializable()
+    {
+        return new ActionsQueryState(mEventId);
+    }
+
+
+    /**
+     * {@link State} of an {@link ActionsQuery}.
+     */
+    private final static class ActionsQueryState implements State<ApiQuery<Iterator<Link>>>
+    {
+        private final String mEventId;
+
+
+        private ActionsQueryState(String eventId)
+        {
+            mEventId = eventId;
+        }
+
+
+        @Override
+        public ApiQuery<Iterator<Link>> restored()
+        {
+            return new ActionsQuery(mEventId);
+        }
+    }
 }

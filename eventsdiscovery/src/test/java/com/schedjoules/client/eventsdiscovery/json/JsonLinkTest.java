@@ -140,6 +140,7 @@ public class JsonLinkTest
                 "}")).firstParameter(parameterType, "123").value());
     }
 
+
     @Test
     public void firstParameter3() throws Exception
     {
@@ -150,6 +151,7 @@ public class JsonLinkTest
                 "  \"href\": \"http://example.com\"\n" +
                 "}")).firstParameter(parameterType, "123").value());
     }
+
 
     @Test
     public void parameters() throws Exception

@@ -19,6 +19,7 @@ package com.schedjoules.client.eventsdiscovery.http;
 
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.ResultPage;
@@ -151,9 +152,56 @@ public final class MultiEventsResponseHandler implements HttpResponseHandler<Res
                         return api.queryResult(new URI(null, null, link.target().getPath(), link.target().getQuery(), null),
                                 new GetRequest<>(new ApiVersionHeaders(API_VERSION), new MultiEventsResponseHandler()));
                     }
+
+
+                    @Override
+                    public State<ApiQuery<ResultPage<Envelope<Event>>>> serializable()
+                    {
+                        try
+                        {
+                            return new ResultPageState(new URI(null, null, link.target().getPath(), link.target().getQuery(), null));
+                        }
+                        catch (URISyntaxException e)
+                        {
+                            throw new RuntimeException(e);
+                        }
+                    }
                 };
             }
 
         };
+    }
+
+
+    private final static class ResultPageState implements State<ApiQuery<ResultPage<Envelope<Event>>>>
+    {
+        private final URI mPageUri;
+
+
+        private ResultPageState(URI pageUri)
+        {
+            mPageUri = pageUri;
+        }
+
+
+        @Override
+        public ApiQuery<ResultPage<Envelope<Event>>> restored()
+        {
+            return new ApiQuery<ResultPage<Envelope<Event>>>()
+            {
+                @Override
+                public ResultPage<Envelope<Event>> queryResult(Api api) throws IOException, URISyntaxException, ProtocolError, ProtocolException
+                {
+                    return api.queryResult(mPageUri, new GetRequest<>(new ApiVersionHeaders(API_VERSION), new MultiEventsResponseHandler()));
+                }
+
+
+                @Override
+                public State<ApiQuery<ResultPage<Envelope<Event>>>> serializable()
+                {
+                    return ResultPageState.this;
+                }
+            };
+        }
     }
 }

@@ -18,15 +18,17 @@
 package com.schedjoules.client.eventsdiscovery.queries;
 
 import com.schedjoules.client.Api;
+import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.EventsDiscovery;
 import com.schedjoules.client.eventsdiscovery.GeoLocation;
-import com.schedjoules.client.utils.MapQueryString;
 import com.schedjoules.client.eventsdiscovery.ResultPage;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.eventsdiscovery.http.MultiEventsResponseHandler;
 import com.schedjoules.client.utils.ApiVersionHeaders;
+import com.schedjoules.client.utils.MapQueryString;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.rfc5545.DateTime;
@@ -137,6 +139,32 @@ public final class SimpleEventsDiscovery implements EventsDiscovery
         catch (URISyntaxException e)
         {
             throw new ProtocolException("Can't build URL", e);
+        }
+    }
+
+
+    @Override
+    public State<ApiQuery<ResultPage<Envelope<Event>>>> serializable()
+    {
+        return new EventsDiscoveryState(mParams);
+    }
+
+
+    private final static class EventsDiscoveryState implements State<ApiQuery<ResultPage<Envelope<Event>>>>
+    {
+        private final Map<String, String> mParams;
+
+
+        private EventsDiscoveryState(Map<String, String> params)
+        {
+            mParams = params;
+        }
+
+
+        @Override
+        public ApiQuery<ResultPage<Envelope<Event>>> restored()
+        {
+            return new SimpleEventsDiscovery(mParams);
         }
     }
 }

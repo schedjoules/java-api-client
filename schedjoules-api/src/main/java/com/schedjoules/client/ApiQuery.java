@@ -21,6 +21,7 @@ import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.URISyntaxException;
 
 
@@ -45,4 +46,12 @@ public interface ApiQuery<T>
      * @throws ProtocolException
      */
     T queryResult(Api api) throws IOException, URISyntaxException, ProtocolError, ProtocolException;
+
+    /**
+     * Creates a {@link Serializable} {@link State} of this {@link ApiQuery}. The {@link State} object can be used to recreate this {@link ApiQuery}.
+     *
+     * @return A {@link Serializable} {@link State}.
+     */
+    State<ApiQuery<T>> serializable();
+
 }

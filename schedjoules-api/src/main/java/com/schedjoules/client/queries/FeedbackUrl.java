@@ -19,6 +19,7 @@ package com.schedjoules.client.queries;
 
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.http.RedirectUrlResponseHandler;
 import com.schedjoules.client.utils.ApiVersionHeaders;
 import com.schedjoules.client.utils.MapQueryString;
@@ -120,5 +121,12 @@ public final class FeedbackUrl implements ApiQuery<URI>
         {
             throw new ProtocolException(String.format("Can't build request URI."), e);
         }
+    }
+
+
+    @Override
+    public State<ApiQuery<URI>> serializable()
+    {
+        throw new UnsupportedOperationException("FeedbackUrl request can't be serialized atm.");
     }
 }

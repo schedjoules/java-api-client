@@ -19,14 +19,17 @@ package com.schedjoules.client.eventsdiscovery.locations;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * @author Marten Gajda
  */
-public class TextGeoLocationTest {
+public class TextGeoLocationTest
+{
     @Test
-    public void latitude() throws Exception {
+    public void latitude() throws Exception
+    {
         assertEquals(0, new TextGeoLocation("0,0").latitude(), 0.00001);
         assertEquals(5, new TextGeoLocation("5,0").latitude(), 0.00001);
         assertEquals(5.123, new TextGeoLocation("5.123,0").latitude(), 0.0001);
@@ -38,8 +41,10 @@ public class TextGeoLocationTest {
         assertEquals(-5.123, new TextGeoLocation("-5.123,1.234").latitude(), 0.0001);
     }
 
+
     @Test
-    public void longitude() throws Exception {
+    public void longitude() throws Exception
+    {
         assertEquals(0, new TextGeoLocation("0,0").longitude(), 0.00001);
         assertEquals(5, new TextGeoLocation("0,5").longitude(), 0.00001);
         assertEquals(5.123, new TextGeoLocation("0,5.123").longitude(), 0.0001);

@@ -19,6 +19,7 @@ package com.schedjoules.client.insights;
 
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.insights.utils.JsonRequestEntity;
 import com.schedjoules.client.utils.ApiVersionHeaders;
 import org.dmfs.httpessentials.HttpMethod;
@@ -115,6 +116,13 @@ public final class InsightsRequest implements ApiQuery<Boolean>
                 return new TrivialResponseHandler<>(HttpStatus.OK.equals(response.status()));
             }
         });
+    }
+
+
+    @Override
+    public State<ApiQuery<Boolean>> serializable()
+    {
+        throw new UnsupportedOperationException("InsightsRequests can't be serialized atm.");
     }
 
 

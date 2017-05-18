@@ -19,6 +19,7 @@ package com.schedjoules.client.eventsdiscovery.queries;
 
 import com.schedjoules.client.Api;
 import com.schedjoules.client.ApiQuery;
+import com.schedjoules.client.State;
 import com.schedjoules.client.eventsdiscovery.GeoLocation;
 import com.schedjoules.client.eventsdiscovery.http.CustomHandled;
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
@@ -113,5 +114,12 @@ public final class Coverage implements FluentCoverage
 
         HttpResponseHandler<Boolean> responseHandler = new OkStatusResponseHandler();
         return api.queryResult(uri, new CustomHandled<>(new GetRequest<>(responseHandler), responseHandler));
+    }
+
+
+    @Override
+    public State<ApiQuery<Boolean>> serializable()
+    {
+        throw new UnsupportedOperationException("Coverage request can't be serialized atm.");
     }
 }
