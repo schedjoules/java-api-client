@@ -20,6 +20,7 @@ package com.schedjoules.client.eventsdiscovery.http;
 import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.json.JsonEvent;
+import com.schedjoules.client.eventsdiscovery.utils.Cached;
 import com.schedjoules.client.utils.HeaderTypes;
 import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
@@ -69,7 +70,7 @@ public final class SingleEventResponseHandler implements HttpResponseHandler<Env
             @Override
             public Event payload()
             {
-                return new JsonEvent(jsonObject);
+                return new Cached(new JsonEvent(jsonObject));
             }
         };
     }

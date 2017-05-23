@@ -18,6 +18,7 @@
 package com.schedjoules.client.eventsdiscovery.json;
 
 import com.schedjoules.client.eventsdiscovery.Event;
+import com.schedjoules.client.eventsdiscovery.utils.Cached;
 import org.json.JSONObject;
 
 
@@ -31,6 +32,6 @@ public final class JsonEventFactory implements JsonEnvelope.JsonPayloadFactory<E
     @Override
     public Event payload(JSONObject jsonObject)
     {
-        return new JsonEvent(jsonObject);
+        return new Cached(new JsonEvent(jsonObject));
     }
 }
