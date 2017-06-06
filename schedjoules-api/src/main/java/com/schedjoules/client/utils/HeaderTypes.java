@@ -23,6 +23,8 @@ import org.dmfs.httpessentials.headers.HeaderType;
 import org.dmfs.httpessentials.headers.SingletonHeaderType;
 import org.dmfs.httpessentials.types.Token;
 
+import java.util.Locale;
+
 
 /**
  * Some static {@link HeaderType} definitions we use.
@@ -34,6 +36,7 @@ public final class HeaderTypes
 
     public final static SingletonHeaderType<Token> API_VERSION = new BasicSingletonHeaderType<>("api-version", TokenConverter.INSTANCE);
     public final static SingletonHeaderType<String> ETAG = new BasicSingletonHeaderType<>("etag", PlainStringHeaderConverter.INSTANCE);
+    public final static SingletonHeaderType<Locale> ACCEPT_LANGUAGE = new BasicSingletonHeaderType<>("Accept-Language", LocaleConverter.INSTANCE);
 
 
     private HeaderTypes()
