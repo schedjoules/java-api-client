@@ -18,7 +18,7 @@
 package com.schedjoules.client.eventsdiscovery.locations;
 
 import com.schedjoules.client.eventsdiscovery.GeoLocation;
-import org.dmfs.iterables.Separated;
+import org.dmfs.iterables.Split;
 
 import java.net.URI;
 import java.util.Iterator;
@@ -35,7 +35,7 @@ import java.util.Locale;
  */
 public final class UriGeoLocation implements GeoLocation
 {
-    private final Iterable<String> mValues;
+    private final Iterable<CharSequence> mValues;
 
 
     public UriGeoLocation(String geoLocation)
@@ -46,23 +46,23 @@ public final class UriGeoLocation implements GeoLocation
 
     public UriGeoLocation(URI geoLocation)
     {
-        mValues = new Separated(geoLocation.getSchemeSpecificPart(), ',');
+        mValues = new Split(geoLocation.getSchemeSpecificPart(), ',');
     }
 
 
     @Override
     public float latitude()
     {
-        return Float.parseFloat(mValues.iterator().next());
+        return Float.parseFloat(mValues.iterator().next().toString());
     }
 
 
     @Override
     public float longitude()
     {
-        Iterator<String> parts = mValues.iterator();
+        Iterator<CharSequence> parts = mValues.iterator();
         parts.next();
-        return Float.parseFloat(parts.next());
+        return Float.parseFloat(parts.next().toString());
     }
 
 

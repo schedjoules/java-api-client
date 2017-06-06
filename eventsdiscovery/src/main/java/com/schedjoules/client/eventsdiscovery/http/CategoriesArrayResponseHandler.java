@@ -20,14 +20,13 @@ package com.schedjoules.client.eventsdiscovery.http;
 import com.schedjoules.client.eventsdiscovery.Category;
 import com.schedjoules.client.eventsdiscovery.json.JsonArrayIterator;
 import com.schedjoules.client.eventsdiscovery.json.JsonCategory;
-
 import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.httpessentials.responsehandlers.StringResponseHandler;
-import org.dmfs.iterators.AbstractConvertedIterator;
-import org.dmfs.iterators.ConvertedIterator;
+import org.dmfs.iterators.Function;
+import org.dmfs.iterators.decorators.Mapped;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,11 +45,11 @@ public final class CategoriesArrayResponseHandler implements HttpResponseHandler
     public Iterator<Category> handleResponse(final HttpResponse response) throws IOException, ProtocolError, ProtocolException
     {
         JSONArray categoriesArray = new JSONArray(new StringResponseHandler().handleResponse(response));
-        return new ConvertedIterator<>(new JsonArrayIterator(categoriesArray),
-                new AbstractConvertedIterator.Converter<Category, JSONObject>()
+        return new Mapped<>(new JsonArrayIterator(categoriesArray),
+                new Function<JSONObject, Category>()
                 {
                     @Override
-                    public Category convert(JSONObject element)
+                    public Category apply(JSONObject element)
                     {
                         return new JsonCategory(element);
                     }

@@ -20,9 +20,9 @@ package com.schedjoules.client.eventsdiscovery.json;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.Location;
 import org.dmfs.httpessentials.types.Link;
-import org.dmfs.iterators.AbstractConvertedIterator;
-import org.dmfs.iterators.ConvertedIterator;
 import org.dmfs.iterators.EmptyIterator;
+import org.dmfs.iterators.Function;
+import org.dmfs.iterators.decorators.Mapped;
 import org.dmfs.optional.Absent;
 import org.dmfs.optional.Optional;
 import org.dmfs.optional.Present;
@@ -98,11 +98,11 @@ public final class JsonEvent implements Event
             public Iterator<Location> iterator()
             {
                 final JSONObject locations = jsonObject.optJSONObject("locations");
-                return locations == null ? EmptyIterator.<Location>instance() : new ConvertedIterator<>(locations.keys(),
-                        new AbstractConvertedIterator.Converter<Location, String>()
+                return locations == null ? EmptyIterator.<Location>instance() : new Mapped<>(locations.keys(),
+                        new Function<String, Location>()
                         {
                             @Override
-                            public Location convert(String element)
+                            public Location apply(String element)
                             {
                                 return new JsonLocation(locations.getJSONObject(element));
                             }
@@ -122,11 +122,11 @@ public final class JsonEvent implements Event
             public Iterator<Link> iterator()
             {
                 final JSONArray links = jsonObject.optJSONArray("links");
-                return links == null ? EmptyIterator.<Link>instance() : new ConvertedIterator<>(new JsonArrayIterator(links),
-                        new AbstractConvertedIterator.Converter<Link, JSONObject>()
+                return links == null ? EmptyIterator.<Link>instance() : new Mapped<>(new JsonArrayIterator(links),
+                        new Function<JSONObject, Link>()
                         {
                             @Override
-                            public Link convert(JSONObject element)
+                            public Link apply(JSONObject element)
                             {
                                 return new JsonLink(element);
                             }

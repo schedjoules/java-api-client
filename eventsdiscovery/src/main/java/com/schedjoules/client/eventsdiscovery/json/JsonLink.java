@@ -22,10 +22,10 @@ import org.dmfs.httpessentials.parameters.ParameterType;
 import org.dmfs.httpessentials.types.Link;
 import org.dmfs.httpessentials.types.MediaType;
 import org.dmfs.httpessentials.types.StringMediaType;
-import org.dmfs.iterators.AbstractConvertedIterator;
-import org.dmfs.iterators.ConvertedIterator;
 import org.dmfs.iterators.EmptyIterator;
-import org.dmfs.iterators.FilteredIterator;
+import org.dmfs.iterators.Function;
+import org.dmfs.iterators.decorators.Filtered;
+import org.dmfs.iterators.decorators.Mapped;
 import org.dmfs.iterators.filters.AnyOf;
 import org.json.JSONObject;
 
@@ -125,12 +125,12 @@ public final class JsonLink implements Link
     public <T> Iterator<Parameter<T>> parameters(final ParameterType<T> parameterType)
     {
         final JSONObject properties = mJsonObject.optJSONObject(KEY_PROPERTIES);
-        return properties == null ? EmptyIterator.<Parameter<T>>instance() : new ConvertedIterator<>(
-                new FilteredIterator<>(properties.keys(), new AnyOf<>(parameterType.name())),
-                new AbstractConvertedIterator.Converter<Parameter<T>, String>()
+        return properties == null ? EmptyIterator.<Parameter<T>>instance() : new Mapped<>(
+                new Filtered<>(properties.keys(), new AnyOf<>(parameterType.name())),
+                new Function<String, Parameter<T>>()
                 {
                     @Override
-                    public Parameter<T> convert(String element)
+                    public Parameter<T> apply(String element)
                     {
                         return parameterType.entityFromString(properties.getString(element));
                     }

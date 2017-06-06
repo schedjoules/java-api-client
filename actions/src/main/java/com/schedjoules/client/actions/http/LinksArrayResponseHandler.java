@@ -25,9 +25,9 @@ import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.httpessentials.responsehandlers.StringResponseHandler;
 import org.dmfs.httpessentials.types.Link;
-import org.dmfs.iterators.AbstractConvertedIterator;
-import org.dmfs.iterators.ConvertedIterator;
 import org.dmfs.iterators.EmptyIterator;
+import org.dmfs.iterators.Function;
+import org.dmfs.iterators.decorators.Mapped;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -48,12 +48,12 @@ public final class LinksArrayResponseHandler implements HttpResponseHandler<Iter
         final JSONArray linksArray = new JSONObject(new StringResponseHandler().handleResponse(response)).optJSONArray("links");
         return linksArray == null ?
                 EmptyIterator.<Link>instance() :
-                new ConvertedIterator<>(
+                new Mapped<>(
                         new JsonArrayIterator(linksArray),
-                        new AbstractConvertedIterator.Converter<Link, JSONObject>()
+                        new Function<JSONObject, Link>()
                         {
                             @Override
-                            public Link convert(JSONObject element)
+                            public Link apply(JSONObject element)
                             {
                                 return new JsonLink(element);
                             }

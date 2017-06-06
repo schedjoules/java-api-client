@@ -35,11 +35,11 @@ import org.dmfs.httpessentials.headers.Headers;
 import org.dmfs.httpessentials.headers.HttpHeaders;
 import org.dmfs.httpessentials.responsehandlers.StringResponseHandler;
 import org.dmfs.httpessentials.types.Link;
-import org.dmfs.iterators.AbstractConvertedIterator;
-import org.dmfs.iterators.AbstractFilteredIterator;
-import org.dmfs.iterators.ConvertedIterator;
 import org.dmfs.iterators.EmptyIterator;
-import org.dmfs.iterators.FilteredIterator;
+import org.dmfs.iterators.Filter;
+import org.dmfs.iterators.Function;
+import org.dmfs.iterators.decorators.Filtered;
+import org.dmfs.iterators.decorators.Mapped;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -74,10 +74,10 @@ public final class MultiEventsResponseHandler implements HttpResponseHandler<Res
                     @Override
                     public Iterator<Envelope<Event>> iterator()
                     {
-                        return new ConvertedIterator<>(new JsonArrayIterator(jsonArray), new AbstractConvertedIterator.Converter<Envelope<Event>, JSONObject>()
+                        return new Mapped<>(new JsonArrayIterator(jsonArray), new Function<JSONObject, Envelope<Event>>()
                         {
                             @Override
-                            public Envelope<Event> convert(JSONObject jsonObject)
+                            public Envelope<Event> apply(JSONObject jsonObject)
                             {
                                 return new JsonEnvelope<>(jsonObject, new JsonEventFactory());
                             }
@@ -122,8 +122,8 @@ public final class MultiEventsResponseHandler implements HttpResponseHandler<Res
                 {
                     return EmptyIterator.instance();
                 }
-                return new FilteredIterator<>(headers.header(HttpHeaders.LINK).value().iterator(),
-                        new AbstractFilteredIterator.IteratorFilter<Link>()
+                return new Filtered<>(headers.header(HttpHeaders.LINK).value().iterator(),
+                        new Filter<Link>()
                         {
                             @Override
                             public boolean iterate(Link element)
