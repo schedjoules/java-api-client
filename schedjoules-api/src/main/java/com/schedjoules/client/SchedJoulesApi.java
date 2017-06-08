@@ -18,14 +18,18 @@
 package com.schedjoules.client;
 
 import com.schedjoules.client.http.Gzipping;
-import com.schedjoules.client.http.Onymous;
+import com.schedjoules.client.http.ParameterExistsPolicy;
 import org.dmfs.httpessentials.client.HttpRequest;
 import org.dmfs.httpessentials.client.HttpRequestExecutor;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
+import org.dmfs.httpessentials.executors.urlrewriting.UrlRewriting;
 import org.dmfs.httpessentials.executors.useragent.Branded;
 import org.dmfs.httpessentials.types.Product;
 import org.dmfs.httpessentials.types.VersionedProduct;
+import org.dmfs.rfc3986.parameters.ParameterType;
+import org.dmfs.rfc3986.parameters.parametertypes.BasicParameterType;
+import org.dmfs.rfc3986.parameters.valuetypes.TextValueType;
 
 import java.io.IOException;
 import java.net.URI;
@@ -40,6 +44,7 @@ public final class SchedJoulesApi implements Api
 {
     private final Product PRODUCT = new VersionedProduct(BuildConfig.NAME, BuildConfig.VERSION);
     private final URI API_BASE_URI = URI.create("https://api.schedjoules.com");
+    private final ParameterType<CharSequence> PARAM_U = new BasicParameterType<>("u", TextValueType.INSTANCE);
 
     private final ApiClient mClient;
     private final HttpRequestExecutor mExecutor;
@@ -48,7 +53,7 @@ public final class SchedJoulesApi implements Api
     public SchedJoulesApi(ApiClient client, HttpRequestExecutor executor, UserIdentifier userIdentifier)
     {
         mClient = client;
-        mExecutor = new Onymous(new Branded(new Gzipping(executor), PRODUCT), userIdentifier);
+        mExecutor = new UrlRewriting(new Branded(new Gzipping(executor), PRODUCT), new ParameterExistsPolicy(PARAM_U.parameter(userIdentifier)));
     }
 
 
@@ -61,4 +66,5 @@ public final class SchedJoulesApi implements Api
         }
         return mExecutor.execute(API_BASE_URI.resolve(path), mClient.authorizedRequest(request));
     }
+
 }
