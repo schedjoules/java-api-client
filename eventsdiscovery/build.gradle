@@ -24,7 +24,7 @@ dependencies {
     compile 'org.dmfs:http-executor-decorators:' + HTTP_CLIENT_ESSENTIALS_VERSION
     compile 'org.dmfs:httpurlconnection-executor:' + HTTP_CLIENT_ESSENTIALS_VERSION
     compile 'org.dmfs:iterators:' + ITERATORS
-    compile 'org.dmfs:optional:0.1'
+    compile 'org.dmfs:optional:'+ OPTIONAL
     compile 'org.dmfs:rfc3986-uri:0.7'
     compile 'org.dmfs:rfc5545-datetime:0.2.4'
     compile 'org.json:json:20160212'

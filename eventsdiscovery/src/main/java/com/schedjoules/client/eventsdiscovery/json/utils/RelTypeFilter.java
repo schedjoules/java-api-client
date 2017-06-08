@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 SchedJoules
+ * Copyright 2017 SchedJoules
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +15,31 @@
  * limitations under the License.
  */
 
-package com.schedjoules.client.eventsdiscovery;
+package com.schedjoules.client.eventsdiscovery.json.utils;
 
-import org.dmfs.optional.Optional;
+import org.dmfs.httpessentials.types.Link;
+import org.dmfs.iterators.Filter;
 
 
 /**
- * An envelope usually contains an object along with some meta data.
+ * A {@link Filter} to filter {@link Link}s by their reltypes.
  *
  * @author Marten Gajda
  */
-public interface Envelope<T>
+public final class RelTypeFilter implements Filter<Link>
 {
-    String etag();
+    private final String mRelType;
 
-    String uid();
 
-    /**
-     * The {@link Optional} payload of the {@link Envelope}.
-     *
-     * @return
-     */
-    Optional<T> payload();
+    public RelTypeFilter(String relType)
+    {
+        mRelType = relType;
+    }
+
+
+    @Override
+    public boolean iterate(Link element)
+    {
+        return element.relationTypes().contains(mRelType);
+    }
 }

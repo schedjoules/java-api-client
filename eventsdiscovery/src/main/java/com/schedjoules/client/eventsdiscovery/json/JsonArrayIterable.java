@@ -17,39 +17,32 @@
 
 package com.schedjoules.client.eventsdiscovery.json;
 
-import com.schedjoules.client.eventsdiscovery.Category;
-import org.dmfs.rfc3986.Uri;
-import org.dmfs.rfc3986.encoding.Precoded;
-import org.dmfs.rfc3986.uris.LazyUri;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 
 /**
- * {@link Category} that takes the properties from the response JSON.
+ * An {@link Iterable} to iterate the {@link JSONObject}s in a {@link JSONArray}.
  *
- * @author Gabor Keszthelyi
+ * @author Marten Gajda
  */
-public final class JsonCategory implements Category
+public final class JsonArrayIterable implements Iterable<JSONObject>
 {
-    private final JSONObject mJsonObject;
+    private final JSONArray mJsonArray;
 
 
-    public JsonCategory(JSONObject jsonObject)
+    public JsonArrayIterable(JSONArray jsonArray)
     {
-        mJsonObject = jsonObject;
+        // hmmm ... JSONArrays are not immutable but they don't offer any way to clone them either :-|
+        mJsonArray = jsonArray;
     }
 
 
     @Override
-    public Uri name()
+    public Iterator<JSONObject> iterator()
     {
-        return new LazyUri(new Precoded(mJsonObject.getString("name")));
-    }
-
-
-    @Override
-    public CharSequence label()
-    {
-        return mJsonObject.getString("label");
+        return new JsonArrayIterator(mJsonArray);
     }
 }

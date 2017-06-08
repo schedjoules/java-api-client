@@ -18,6 +18,9 @@
 package com.schedjoules.client.eventsdiscovery.json;
 
 import com.schedjoules.client.eventsdiscovery.Envelope;
+import org.dmfs.iterators.Function;
+import org.dmfs.optional.NullSafe;
+import org.dmfs.optional.Optional;
 import org.json.JSONObject;
 
 
@@ -28,22 +31,15 @@ import org.json.JSONObject;
  */
 public final class JsonEnvelope<T> implements Envelope<T>
 {
-
-    public interface JsonPayloadFactory<T>
-    {
-        T payload(JSONObject jsonObject);
-    }
-
-
     private final JSONObject mJsonObject;
 
-    private final JsonPayloadFactory<T> mJsonPayloadFactory;
+    private final Function<Optional<JSONObject>, Optional<T>> mJsonPayloadFunction;
 
 
-    public JsonEnvelope(JSONObject jsonObject, JsonPayloadFactory<T> jsonPayloadFactory)
+    public JsonEnvelope(JSONObject jsonObject, Function<Optional<JSONObject>, Optional<T>> jsonPayloadFunction)
     {
         mJsonObject = jsonObject;
-        mJsonPayloadFactory = jsonPayloadFactory;
+        mJsonPayloadFunction = jsonPayloadFunction;
     }
 
 
@@ -62,17 +58,9 @@ public final class JsonEnvelope<T> implements Envelope<T>
 
 
     @Override
-    public boolean hasPayload()
+    public Optional<T> payload()
     {
         // TODO generalize the name of the property
-        return mJsonObject.has("eventData");
-    }
-
-
-    @Override
-    public T payload()
-    {
-        // TODO generalize the name of the property
-        return mJsonPayloadFactory.payload(mJsonObject.getJSONObject("eventData"));
+        return mJsonPayloadFunction.apply(new NullSafe<>(mJsonObject.optJSONObject("eventData")));
     }
 }

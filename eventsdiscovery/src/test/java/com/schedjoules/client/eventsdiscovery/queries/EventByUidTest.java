@@ -75,10 +75,10 @@ public class EventByUidTest
 
         Envelope<Event> result = ((HttpRequest<Envelope<Event>>) request.getValue()).responseHandler(mockResponse).handleResponse(mockResponse);
         assertEquals("xxxx", result.uid());
-        assertTrue(result.hasPayload());
+        assertTrue(result.payload().isPresent());
         assertEquals("\"1234\"", result.etag());
-        assertEquals("test", result.payload().title());
-        assertEquals(DateTime.parse("Europe/Berlin", "20160102T030405"), result.payload().start());
+        assertEquals("test", result.payload().value().title());
+        assertEquals(DateTime.parse("Europe/Berlin", "20160102T030405"), result.payload().value().start());
     }
 
 }

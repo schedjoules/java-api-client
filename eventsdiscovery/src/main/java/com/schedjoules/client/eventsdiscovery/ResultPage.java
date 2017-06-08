@@ -18,6 +18,7 @@
 package com.schedjoules.client.eventsdiscovery;
 
 import com.schedjoules.client.ApiQuery;
+import org.dmfs.optional.Optional;
 
 
 /**
@@ -30,11 +31,17 @@ public interface ResultPage<E>
 {
     Iterable<E> items();
 
-    boolean isFirstPage();
+    /**
+     * Returns an {@link Optional} {@link ApiQuery} to retrieve the previous {@link ResultPage}, if any.
+     *
+     * @return
+     */
+    Optional<ApiQuery<ResultPage<E>>> previousPageQuery();
 
-    boolean isLastPage();
-
-    ApiQuery<ResultPage<E>> previousPageQuery() throws IllegalStateException;
-
-    ApiQuery<ResultPage<E>> nextPageQuery() throws IllegalStateException;
+    /**
+     * Returns an {@link Optional} {@link ApiQuery} to retrieve the previous {@link ResultPage}, if any.
+     *
+     * @return
+     */
+    Optional<ApiQuery<ResultPage<E>>> nextPageQuery();
 }

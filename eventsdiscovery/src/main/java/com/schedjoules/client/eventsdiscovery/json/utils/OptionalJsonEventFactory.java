@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 SchedJoules
+ * Copyright 2017 SchedJoules
  *
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,23 +15,25 @@
  * limitations under the License.
  */
 
-package com.schedjoules.client.eventsdiscovery.json;
+package com.schedjoules.client.eventsdiscovery.json.utils;
 
 import com.schedjoules.client.eventsdiscovery.Event;
-import com.schedjoules.client.eventsdiscovery.utils.Cached;
+import org.dmfs.iterators.Function;
+import org.dmfs.optional.Optional;
+import org.dmfs.optional.decorators.Mapped;
 import org.json.JSONObject;
 
 
 /**
- * A factory to create {@link Event} objects from JSON objects.
+ * A factory to create {@link Optional} {@link Event}s objects from {@link Optional} {@link JSONObject}s.
  *
  * @author Marten Gajda
  */
-public final class JsonEventFactory implements JsonEnvelope.JsonPayloadFactory<Event>
+public final class OptionalJsonEventFactory implements Function<Optional<JSONObject>, Optional<Event>>
 {
     @Override
-    public Event payload(JSONObject jsonObject)
+    public Optional<Event> apply(Optional<JSONObject> jsonObject)
     {
-        return new Cached(new JsonEvent(jsonObject));
+        return new Mapped<>(new JsonEventFactory(), jsonObject);
     }
 }

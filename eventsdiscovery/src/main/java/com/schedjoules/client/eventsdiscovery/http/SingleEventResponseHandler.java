@@ -27,6 +27,8 @@ import org.dmfs.httpessentials.client.HttpResponseHandler;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.httpessentials.responsehandlers.StringResponseHandler;
+import org.dmfs.optional.Optional;
+import org.dmfs.optional.Present;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -56,21 +58,14 @@ public final class SingleEventResponseHandler implements HttpResponseHandler<Env
             @Override
             public String uid()
             {
-                return payload().uid();
+                return payload().value().uid();
             }
 
 
             @Override
-            public boolean hasPayload()
+            public Optional<Event> payload()
             {
-                return true;
-            }
-
-
-            @Override
-            public Event payload()
-            {
-                return new Cached(new JsonEvent(jsonObject));
+                return new Present<Event>(new Cached(new JsonEvent(jsonObject)));
             }
         };
     }

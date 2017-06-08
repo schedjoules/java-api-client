@@ -25,7 +25,6 @@ import com.schedjoules.client.eventsdiscovery.http.CategoriesArrayResponseHandle
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.utils.ApiVersionHeaders;
 import com.schedjoules.client.utils.HeaderTypes;
-
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 
