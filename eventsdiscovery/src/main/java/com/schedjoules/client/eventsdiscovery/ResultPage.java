@@ -22,15 +22,13 @@ import org.dmfs.optional.Optional;
 
 
 /**
- * A page of the result of an {@link ApiQuery}. It contains an {@link Iterable} of items and optionally returns two more {@link ApiQuery}s to load any previous
- * or next page.
+ * A page of the result of an {@link ApiQuery}. Iterating over a ResultPage returns all {@code <E>}s on this page. A ResultPage can optionally return two more
+ * {@link ApiQuery}s to load any previous or next page.
  *
  * @author Marten Gajda
  */
-public interface ResultPage<E>
+public interface ResultPage<E> extends Iterable<E>
 {
-    Iterable<E> items();
-
     /**
      * Returns an {@link Optional} {@link ApiQuery} to retrieve the previous {@link ResultPage}, if any.
      *

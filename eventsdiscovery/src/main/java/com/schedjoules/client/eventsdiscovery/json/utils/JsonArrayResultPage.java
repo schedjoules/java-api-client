@@ -21,7 +21,7 @@ import com.schedjoules.client.ApiQuery;
 import com.schedjoules.client.eventsdiscovery.Envelope;
 import com.schedjoules.client.eventsdiscovery.Event;
 import com.schedjoules.client.eventsdiscovery.ResultPage;
-import com.schedjoules.client.eventsdiscovery.json.JsonArrayIterable;
+import com.schedjoules.client.eventsdiscovery.json.JsonArrayIterator;
 import com.schedjoules.client.eventsdiscovery.json.JsonEnvelope;
 import org.dmfs.httpessentials.types.Link;
 import org.dmfs.iterables.decorators.Mapped;
@@ -30,6 +30,8 @@ import org.dmfs.optional.First;
 import org.dmfs.optional.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.Iterator;
 
 
 /**
@@ -51,16 +53,18 @@ public final class JsonArrayResultPage implements ResultPage<Envelope<Event>>
 
 
     @Override
-    public Iterable<Envelope<Event>> items()
+    public Iterator<Envelope<Event>> iterator()
     {
-        return new Mapped<>(new JsonArrayIterable(mJsonArray), new Function<JSONObject, Envelope<Event>>()
-        {
-            @Override
-            public Envelope<Event> apply(JSONObject jsonObject)
-            {
-                return new JsonEnvelope<>(jsonObject, new OptionalJsonEventFactory());
-            }
-        });
+        return new org.dmfs.iterators.decorators.Mapped<>(
+                new JsonArrayIterator(mJsonArray),
+                new Function<JSONObject, Envelope<Event>>()
+                {
+                    @Override
+                    public Envelope<Event> apply(JSONObject jsonObject)
+                    {
+                        return new JsonEnvelope<>(jsonObject, new OptionalJsonEventFactory());
+                    }
+                });
     }
 
 
