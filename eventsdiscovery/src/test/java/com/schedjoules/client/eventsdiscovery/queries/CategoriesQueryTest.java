@@ -94,22 +94,23 @@ public class CategoriesQueryTest
                                 "   }\n" +
                                 "]"));
 
-        Iterator<Category> result = (Iterator<Category>) request.getValue().responseHandler(mockResponse).handleResponse(mockResponse);
-        Category c1 = result.next();
+        Iterable<Category> result = (Iterable<Category>) request.getValue().responseHandler(mockResponse).handleResponse(mockResponse);
+        Iterator<Category> iterator = result.iterator();
+        Category c1 = iterator.next();
         assertEquals("http://schedjoules.com/categories/music/r-b", new Text(c1.name()).toString());
         assertEquals("R&b", c1.label());
-        result.next();
-        result.next();
-        Category c4 = result.next();
+        iterator.next();
+        iterator.next();
+        Category c4 = iterator.next();
         assertEquals("http://schedjoules.com/categories/museums", new Text(c4.name()).toString());
         assertEquals("Museums", c4.label());
-        assertFalse(result.hasNext());
+        assertFalse(iterator.hasNext());
 
         // test with empty json array response
         HttpResponse emptyMockResponse = new StaticMockResponse(HttpStatus.OK, new SingletonHeaders(HeaderTypes.ETAG.entityFromString("\"1234\"")),
                 new StaticMockResponseEntity(new StructuredMediaType("application", "json"), "[]"));
-        Iterator<Category> emptyResult = (Iterator<Category>) request.getValue().responseHandler(emptyMockResponse).handleResponse(emptyMockResponse);
-        assertFalse(emptyResult.hasNext());
+        Iterable<Category> emptyResult = (Iterable<Category>) request.getValue().responseHandler(emptyMockResponse).handleResponse(emptyMockResponse);
+        assertFalse(emptyResult.iterator().hasNext());
     }
 
 }

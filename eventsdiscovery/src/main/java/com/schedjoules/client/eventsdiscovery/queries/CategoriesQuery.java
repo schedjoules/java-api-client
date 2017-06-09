@@ -25,13 +25,13 @@ import com.schedjoules.client.eventsdiscovery.http.CategoriesArrayResponseHandle
 import com.schedjoules.client.eventsdiscovery.http.GetRequest;
 import com.schedjoules.client.utils.ApiVersionHeaders;
 import com.schedjoules.client.utils.HeaderTypes;
+
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Iterator;
 import java.util.Locale;
 
 
@@ -40,7 +40,7 @@ import java.util.Locale;
  *
  * @author Gabor Keszthelyi
  */
-public final class CategoriesQuery implements ApiQuery<Iterator<Category>>
+public final class CategoriesQuery implements ApiQuery<Iterable<Category>>
 {
     private final static String API_VERSION = "1";
     private final static String PATH = "/categories";
@@ -61,7 +61,7 @@ public final class CategoriesQuery implements ApiQuery<Iterator<Category>>
 
 
     @Override
-    public Iterator<Category> queryResult(Api api) throws IOException, URISyntaxException, ProtocolError, ProtocolException
+    public Iterable<Category> queryResult(Api api) throws IOException, URISyntaxException, ProtocolError, ProtocolException
     {
         return api.queryResult(
                 new URI(null, null, PATH, null, null),
@@ -73,7 +73,7 @@ public final class CategoriesQuery implements ApiQuery<Iterator<Category>>
 
 
     @Override
-    public State<ApiQuery<Iterator<Category>>> serializable()
+    public State<ApiQuery<Iterable<Category>>> serializable()
     {
         throw new UnsupportedOperationException("Serialization of CategoriesQuery is not implemented");
     }

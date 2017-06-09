@@ -18,20 +18,18 @@
 package com.schedjoules.client.eventsdiscovery.http;
 
 import com.schedjoules.client.eventsdiscovery.Category;
-import com.schedjoules.client.eventsdiscovery.json.JsonArrayIterator;
-import com.schedjoules.client.eventsdiscovery.json.JsonCategory;
+import com.schedjoules.client.eventsdiscovery.json.JsonArrayIterable;
+import com.schedjoules.client.eventsdiscovery.json.utils.JsonCategoryFactory;
+
 import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.httpessentials.responsehandlers.StringResponseHandler;
-import org.dmfs.iterators.Function;
-import org.dmfs.iterators.decorators.Mapped;
+import org.dmfs.iterables.decorators.Mapped;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Iterator;
 
 
 /**
@@ -39,20 +37,14 @@ import java.util.Iterator;
  *
  * @author Gabor Keszthelyi
  */
-public final class CategoriesArrayResponseHandler implements HttpResponseHandler<Iterator<Category>>
+public final class CategoriesArrayResponseHandler implements HttpResponseHandler<Iterable<Category>>
 {
     @Override
-    public Iterator<Category> handleResponse(final HttpResponse response) throws IOException, ProtocolError, ProtocolException
+    public Iterable<Category> handleResponse(final HttpResponse response) throws IOException, ProtocolError, ProtocolException
     {
-        JSONArray categoriesArray = new JSONArray(new StringResponseHandler().handleResponse(response));
-        return new Mapped<>(new JsonArrayIterator(categoriesArray),
-                new Function<JSONObject, Category>()
-                {
-                    @Override
-                    public Category apply(JSONObject element)
-                    {
-                        return new JsonCategory(element);
-                    }
-                });
+        return new Mapped<>(
+                new JsonArrayIterable(new JSONArray(new StringResponseHandler().handleResponse(response))),
+                new JsonCategoryFactory());
     }
+
 }
