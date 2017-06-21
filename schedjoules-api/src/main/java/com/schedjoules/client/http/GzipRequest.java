@@ -24,8 +24,8 @@ import org.dmfs.httpessentials.client.HttpRequestEntity;
 import org.dmfs.httpessentials.client.HttpResponse;
 import org.dmfs.httpessentials.client.HttpResponseEntity;
 import org.dmfs.httpessentials.client.HttpResponseHandler;
+import org.dmfs.httpessentials.converters.OptionallyQuoted;
 import org.dmfs.httpessentials.converters.PlainStringHeaderConverter;
-import org.dmfs.httpessentials.converters.Quoted;
 import org.dmfs.httpessentials.exceptions.ProtocolError;
 import org.dmfs.httpessentials.exceptions.ProtocolException;
 import org.dmfs.httpessentials.headers.BasicListHeaderType;
@@ -64,7 +64,7 @@ public final class GzipRequest<T> implements HttpRequest<T>
      * temporary workaround. HttpUrlConnection headers are not case agnostic and HttpUrlConnectionExecutor's are neither, so we have to be specific about the case
      */
     private final static ListHeaderType<String> CONTENT_ENCODING = new BasicListHeaderType<>("Content-Encoding",
-            new Quoted<>(PlainStringHeaderConverter.INSTANCE));
+            new OptionallyQuoted<>(PlainStringHeaderConverter.INSTANCE));
 
     private final HttpRequest<T> mDecorated;
 
