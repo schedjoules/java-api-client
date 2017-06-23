@@ -18,6 +18,8 @@
 package com.schedjoules.client.eventsdiscovery;
 
 import com.schedjoules.client.ApiQuery;
+
+import org.dmfs.rfc3986.Uri;
 import org.dmfs.rfc5545.DateTime;
 
 
@@ -84,4 +86,9 @@ public interface EventsDiscovery extends ApiQuery<ResultPage<Envelope<Event>>>
      * @return
      */
     EventsDiscovery withStartAtOrAfter(DateTime startAtOrAfter);
+
+    /**
+     * Sets the event categories filter
+     */
+    EventsDiscovery withCategories(Iterable<Uri> categories);
 }
