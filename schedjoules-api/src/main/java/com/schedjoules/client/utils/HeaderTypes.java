@@ -36,7 +36,7 @@ public final class HeaderTypes
 
     public final static SingletonHeaderType<Token> API_VERSION = new BasicSingletonHeaderType<>("api-version", TokenConverter.INSTANCE);
     public final static SingletonHeaderType<String> ETAG = new BasicSingletonHeaderType<>("etag", PlainStringHeaderConverter.INSTANCE);
-    public final static SingletonHeaderType<Locale> ACCEPT_LANGUAGE = new BasicSingletonHeaderType<>("Accept-Language", LocaleConverter.INSTANCE);
+    public final static SingletonHeaderType<Locale> ACCEPT_LANGUAGE = new BasicSingletonHeaderType<>("Accept-Language", LocaleToStringConverter.INSTANCE);
 
 
     private HeaderTypes()

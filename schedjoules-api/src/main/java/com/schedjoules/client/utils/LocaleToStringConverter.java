@@ -23,16 +23,18 @@ import java.util.Locale;
 
 
 /**
- * {@link EntityConverter} for {@link Locale}.
+ * {@link EntityConverter} from {@link Locale} to {@link String}.
+ * <p>
+ * (The other direction is not supported by this class.)
  *
  * @author Gabor Keszthelyi
  */
-public final class LocaleConverter implements EntityConverter<Locale>
+public final class LocaleToStringConverter implements EntityConverter<Locale>
 {
-    public static final LocaleConverter INSTANCE = new LocaleConverter();
+    public static final LocaleToStringConverter INSTANCE = new LocaleToStringConverter();
 
 
-    private LocaleConverter()
+    private LocaleToStringConverter()
     {
     }
 
@@ -40,13 +42,19 @@ public final class LocaleConverter implements EntityConverter<Locale>
     @Override
     public Locale value(String valueString)
     {
-        return Locale.forLanguageTag(valueString);
+        /*
+        Java7 has Locale.forLanguageTag() and corresponding locale.toLanguageTag() to comply with a standard,
+        but it's not available under Android API 21.
+        No standard method to parse the string to Local on Java6.
+        See for example: https://stackoverflow.com/questions/2522248/how-to-get-locale-from-its-string-representation-in-java
+         */
+        throw new UnsupportedOperationException("Not implemented");
     }
 
 
     @Override
-    public String valueString(Locale value)
+    public String valueString(Locale locale)
     {
-        return value.toLanguageTag();
+        return locale.toString().replace("_", "-");
     }
 }
